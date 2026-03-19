@@ -58,7 +58,7 @@ mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 _ssl_ctx = _ssl.create_default_context()
 _ssl_ctx.check_hostname = False
 _ssl_ctx.verify_mode = _ssl.CERT_NONE
-client = AsyncIOMotorClient(mongo_url, tls=True, tlsAllowInvalidCertificates=True, ssl_context=_ssl_ctx)
+client = AsyncIOMotorClient(mongo_url)
 db_name = os.environ.get('DB_NAME', 'med-checker')
 db = client[db_name]
 
