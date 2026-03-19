@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Medical-Focused Typography ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    @apply antialiased bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+
+  code {
+    font-family: Menlo, Consolas, "Courier New", monospace;
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+/* ---------- Medical Theme System (Cyan-White) ---------- */
+@layer base {
+  :root {
+    /* Clean Medical Background - Soft White with subtle cyan tint */
+    --background: 195 20% 98%;
+    --foreground: 210 15% 20%;
+
+    /* Glassmorphism Cards */
+    --card: 0 0% 100%;
+    --card-foreground: var(--foreground);
+
+    /* Medical Cyan Primary */
+    --primary: 189 94% 43%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Soft Secondary */
+    --secondary: 195 25% 96%;
+    --secondary-foreground: var(--foreground);
+
+    /* Muted Backgrounds */
+    --muted: 195 20% 94%;
+    --muted-foreground: 210 10% 46%;
+
+    /* Accent Cyan */
+    --accent: 189 85% 95%;
+    --accent-foreground: 189 94% 43%;
+
+    /* Medical Alert Colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 195 20% 88%;
+    --input: 195 20% 92%;
+    --ring: 189 94% 43%;
+    --radius: 1.2rem;
+
+    /* Medical Data Visualization */
+    --chart-1: 189 94% 43%;
+    --chart-2: 174 72% 56%;
+    --chart-3: 199 89% 48%;
+    --chart-4: 184 81% 63%;
+    --chart-5: 194 75% 71%;
+  }
+
+  .dark {
+    --background: 210 20% 12%;
+    --foreground: 0 0% 98%;
+    --card: 210 18% 16%;
+    --card-foreground: var(--foreground);
+    --primary: 189 94% 50%;
+    --primary-foreground: var(--foreground);
+    --secondary: 210 15% 20%;
+    --secondary-foreground: var(--foreground);
+    --muted: 210 15% 24%;
+    --muted-foreground: 195 15% 70%;
+    --accent: 189 70% 25%;
+    --accent-foreground: var(--foreground);
+    --border: 210 12% 28%;
+  }
+}
+
+/* ---------- Glassmorphism Components ---------- */
+@layer components {
+  /* Enhanced Glass Card */
+  .card {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40
+    shadow-lg shadow-cyan-100/30 rounded-3xl p-6
+    transition-all duration-300 ease-out
+    hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-200/40;
+  }
+
+  /* Glass Navigation */
+  .glass-nav {
+    @apply bg-white/60 backdrop-blur-2xl border-b border-white/40
+    shadow-sm shadow-cyan-100/20;
+  }
+
+  /* Glass Input */
+  .glass-input {
+    @apply bg-white/50 backdrop-blur-md border border-cyan-200/40
+    rounded-2xl px-4 py-3 shadow-sm
+    focus:bg-white/70 focus:border-cyan-400/60
+    focus:ring-2 focus:ring-cyan-300/30
+    transition-all duration-200;
+  }
+
+  /* Primary Medical Button */
+  .btn-primary {
+    @apply px-6 py-3 rounded-2xl font-medium transition-all duration-200
+    bg-gradient-to-r from-cyan-500 to-cyan-600
+    text-white shadow-lg shadow-cyan-500/30
+    hover:shadow-xl hover:shadow-cyan-500/40
+    hover:-translate-y-0.5 active:scale-95;
+  }
+
+  /* Secondary Glass Button */
+  .btn-secondary {
+    @apply px-6 py-3 rounded-2xl font-medium transition-all duration-200
+    bg-white/60 backdrop-blur-md text-cyan-700
+    border border-cyan-200/40 shadow-sm
+    hover:bg-white/80 hover:shadow-md
+    hover:-translate-y-0.5 active:scale-95;
+  }
+
+  /* Glass Badge */
+  .glass-badge {
+    @apply inline-flex items-center px-4 py-2 rounded-full
+    bg-cyan-50/60 backdrop-blur-sm border border-cyan-200/40
+    text-sm font-medium text-cyan-700 shadow-sm;
+  }
+
+  /* Smooth Scroll */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- Medical Animations ---------- */
+@layer utilities {
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(6, 182, 212, 0.6);
+    }
+  }
+
+  @keyframes slide-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-slide-in-up {
+    animation: slide-in-up 0.5s ease-out;
+  }
+}
+
+/* ---------- Custom Medical Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(6, 182, 212, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #06b6d4, #0891b2);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0891b2, #0e7490);
+}
+
+/* ---------- Smooth Transitions ---------- */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
