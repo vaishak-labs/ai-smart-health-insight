@@ -485,10 +485,9 @@ async def chat_message(
         user_id = current_user['user_id'] if current_user else None
 
         history_doc = await db.conversations.find_one({'session_id': session_id})
-        if history_doc and 'messages' in history_doc:
-            messages = list(history_doc['messages'])
-        else:
-            messages = []
+        messages = []
+        if history_doc and isinstance(history_doc.get('messages'), list):
+            messages = history_doc['messages']
 
         language_map = {
             'en': 'English', 'hi': 'Hindi', 'ta': 'Tamil', 'te': 'Telugu',
@@ -531,7 +530,7 @@ Respond in: {target_lang}."""
                     'user_id': user_id,
                     'messages': messages,
                     'updated_at': datetime.now(timezone.utc).isoformat(),
-                    'created_at': history_doc.get('created_at') if history_doc else datetime.now(timezone.utc).isoformat()
+                    'created_at': history_doc['created_at'] if history_doc and 'created_at' in history_doc else datetime.now(timezone.utc).isoformat()
                 }},
                 upsert=True
             )
@@ -550,10 +549,12 @@ Respond in: {target_lang}."""
 async def get_chat_history(session_id: str):
     try:
         history = await db.conversations.find_one({'session_id': session_id}, {'_id': 0})
-        if history:
-            return history
-        else:
+        if not history:
             return {'session_id': session_id, 'messages': []}
+        messages = history.get('messages')
+        if not isinstance(messages, list):
+            messages = []
+        return {'session_id': session_id, 'messages': messages}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -564,13 +565,16 @@ async def get_all_sessions(current_user: Optional[dict] = Depends(get_current_us
         if current_user:
             query['user_id'] = current_user['user_id']
 
-        sessions = await db.conversations.find(query, {'_id': 0, 'session_id': 1, 'updated_at': 1, 'created_at': 1, 'messages': 1}).sort('updated_at', -1).to_list(50)
+        sessions = await db.conversations.find(query, {'_id': 0}).to_list(50)
 
         for session in sessions:
-            if session.get('messages'):
-                last_msg = session['messages'][-1]
+            messages = session.get('messages') or []
+            if not isinstance(messages, list):
+                messages = []
+            if messages:
+                last_msg = messages[-1]
                 session['preview'] = last_msg.get('content', '')[:100]
-                session['message_count'] = len(session['messages'])
+                session['message_count'] = len(messages)
             else:
                 session['preview'] = 'No messages yet'
                 session['message_count'] = 0
