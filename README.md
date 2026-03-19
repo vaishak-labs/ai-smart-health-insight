@@ -1,2 +1,1 @@
-# ai-smart-health-insight
-Built a full-stack AI-powered medical assistant web app with medicine interaction checking, lab report analysis, and a multilingual chatbot using React, FastAPI, and LLaMA 3.3 70B via Groq API.
+Smart Health Insight is a full-stack AI-powered medical assistant that helps users check drug interactions, analyze lab reports, and chat with a health assistant in 9 languages. It combines real pharmacy data from RxNorm and FDA OpenFDA with Groq's LLaMA 3.3 70B model to generate detailed risk assessments, health scores by body system, and actionable recommendations — all visualized through custom-built animated charts and dashboards.
